@@ -1,0 +1,10 @@
+1: CyclicBarrier 等待线程到设定数目执行
+2: CountDownLatchDemo 线程计数器，当其他线程执行完毕，主线程执行
+3: Semaphore 线程池申请线程执行，没有申请到线程阻塞，线程执行完毕归还池。
+4: ConditionDemo 信号线程，通过信号控制线程执行。
+
+消息队列
+4: ConcurrentLinkedQueue  无界非阻塞队列，注意内存不要爆，效率最高
+5: LinkedBlockingQueue 有界阻塞队列，默认数据量Integer.MAX_VALUE
+6: PriorityBlockingQueue 自定义规则有序消息队列
+7: 

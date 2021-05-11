@@ -1,0 +1,14 @@
+1:  Unsafe: 基本所有的concurrent包下的类都直接或者间接调用Unsafe类的方法，看懂底层第一步看你此处。
+    版本说明：java9以下不能直接使用Unsafe，需要反射使用。
+2： CAS技术解释：CAS是乐观锁实现的基础理论，基本所有的concurrent包下的类都有CAS的思想，此处第二步看。 
+   优秀文档：https://www.cnblogs.com/barrywxx/p/8487444.html ， https://juejin.im/post/5a73cbbff265da4e807783f5
+3： ABA现象解释： CAS修改A记录其变成B在变成A，解决这种问题，需要加入版本概念
+4： JNI技术： java调用本地方法的技术（需要看操作系统底层实现，选看）
+5： 可中断的阻塞与不可中断的阻塞
+    不可中断锁
+		5.1：java.io包中的同步Socket I/O
+		5.2：java.io包中的同步I/O
+		5.3：Selector的异步I/O
+		5.4：获取某个锁
+
+
