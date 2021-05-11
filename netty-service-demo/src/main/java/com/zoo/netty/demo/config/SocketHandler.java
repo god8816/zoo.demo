@@ -26,6 +26,6 @@ public class SocketHandler extends SimpleChannelInboundHandler<String>{
 	
 	@Override
 	protected void messageReceived(ChannelHandlerContext ctx, String msg) throws Exception {
-		log.info("msg : " + msg);
+		ctx.writeAndFlush(msg);
 	}
 }

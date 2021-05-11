@@ -29,12 +29,12 @@ public class NettyConfig {
 	/**
      * boss线程组
      */
-    EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+    EventLoopGroup bossGroup = new NioEventLoopGroup(4);
     
     /**
      * worker线程组
      */
-    EventLoopGroup workGroup = new NioEventLoopGroup(4);
+    EventLoopGroup workGroup = new NioEventLoopGroup(16);
 
 	/**
 	 * spring boot项目注入netty且netty第一步加载
@@ -70,15 +70,13 @@ public class NettyConfig {
 					pipeline.addLast("handler",new SocketHandler());
 					
 			}});
-	        ChannelFuture future = b.bind(4201).sync();
-	        future.channel().closeFuture().sync();
+	        b.bind(4201).sync();
+	        //spring环境不建议在这里写下面语句会阻塞springboot主线程
+	        //future.channel().closeFuture().sync();
 		} catch (InterruptedException e) {
-			log.error("netty监听异常：{}",e.getMessage()); 
+			log.error("netty异常：{}",e.getMessage()); 
 			e.printStackTrace();
-		} finally {
-			bossGroup.shutdownGracefully();
-			workGroup.shutdownGracefully();
-		}	
+		} 
     }
     
     public void stopNetty() {

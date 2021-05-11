@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.zoo.netty.demo;
+package com.zoo.netty;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
