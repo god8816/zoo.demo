@@ -28,11 +28,12 @@ public class ZkCuratorLock{
     
     //zk分布式锁创建节点在零时目录zklock下创建
     static String lockPath = "/zklock";
-    //实例化分布式锁
-    final static InterProcessLock lock = new InterProcessSemaphoreMutex(client, lockPath);
-	
+
 	
 	public static void main(String[] args) throws NoSuchAlgorithmException, IOException, KeeperException, InterruptedException {
+	    //实例化分布式锁
+	    InterProcessLock lock = new InterProcessSemaphoreMutex(client, lockPath);
+		
 		//获取锁
 		try {
 			lock.acquire();
