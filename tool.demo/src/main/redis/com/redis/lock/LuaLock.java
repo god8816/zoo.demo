@@ -9,9 +9,16 @@ import redis.clients.jedis.Jedis;
 public class LuaLock {
 
 	public static void main(String[] args) {
-			 lock("122333", "33331","10000" );
-			 unlock("122333", "33331");
+		lualock("122333", "33331",10 );
 	}
+	
+	public static void lualock(String key,String value,Integer timeOut) {
+		 lock(key, value,timeOut);
+		 System.out.println("我获取了锁，该我干活了。");
+		 unlock(key, value);
+    }
+	
+	
 		
 	/**
 	 * 加锁语法
@@ -20,7 +27,7 @@ public class LuaLock {
 	 * time: redis timeouts 锁过期时间一般大于最耗时的业务消耗的时间 
 	 * 语法参考文档：https://www.runoob.com/redis/redis-scripting.html
 	 * */	
-	public static String lock(String key, String value,String timeOut ) {
+	public static String lock(String key, String value,Integer timeOut ) {
 			/**
 	         *  -- 加锁脚本，其中KEYS[]为外部传入参数
 	         *  -- KEYS[1]表示key 
@@ -33,7 +40,7 @@ public class LuaLock {
                 "     return 0 " +
                 "end";
 			
-			Jedis jedis = new Jedis("localhost");
+			Jedis jedis = InItRedis.singleServerByRedisClients();
 			//在缓存中添加脚本但不执行
 			String scriptId = jedis.scriptLoad(lua_getlock_script);
 			//查询脚本是否添加
