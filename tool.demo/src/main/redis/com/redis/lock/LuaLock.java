@@ -1,19 +1,14 @@
 package com.redis.lock;
 
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import redis.clients.jedis.Jedis;
 
 /**
- * 功能：redis - setNx - setNx实现分布式锁
+ * 功能：redis - Lua - Lua实现分布式锁
  * 作者：丁志超
  */  
 public class LuaLock {
 
-		public static void main(String[] args) {
+	public static void main(String[] args) {
 			 lock("122333", "33331","10000" );
 			 unlock("122333", "33331");
 	}
