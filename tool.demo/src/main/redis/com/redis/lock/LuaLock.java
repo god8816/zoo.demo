@@ -7,10 +7,8 @@ import redis.clients.jedis.Jedis;
  * 作者：丁志超
  */  
 public class LuaLock {
-
-	public static void main(String[] args) {
-		lualock("122333", "33331",10 );
-	}
+	
+	static Jedis jedis = InItRedis.singleServerByRedisClients();
 	
 	public static void lualock(String key,String value,Integer timeOut) {
 		 lock(key, value,timeOut);
@@ -40,11 +38,10 @@ public class LuaLock {
                 "     return 0 " +
                 "end";
 			
-			Jedis jedis = InItRedis.singleServerByRedisClients();
 			//在缓存中添加脚本但不执行
 			String scriptId = jedis.scriptLoad(lua_getlock_script);
 			//查询脚本是否添加
-			Boolean isExists = jedis.scriptExists(scriptId);
+			//Boolean isExists = jedis.scriptExists(scriptId);
 			//执行脚本 返回1表示成功，返回0表示失败
 			Object num = jedis.eval(lua_getlock_script);;
 			return String.valueOf(num);
@@ -71,14 +68,17 @@ public class LuaLock {
 		                      " return redis.call('del','"+key+"') " +
 		                      "else  return 0 " +
 		                      "end";
-			
-			Jedis jedis = new Jedis("localhost");
 			//在缓存中添加脚本但不执行
 			String scriptId = jedis.scriptLoad(lua_unlock_script);
 			//查询脚本是否添加
-			Boolean isExists = jedis.scriptExists(scriptId);
+			//Boolean isExists = jedis.scriptExists(scriptId);
 			//执行脚本 返回1表示成功，返回0表示失败
 			Object num = jedis.eval(lua_unlock_script);;
 			return String.valueOf(num);
+	}
+	
+	
+	public static void main(String[] args) {
+		lualock("122333", "33331",10 );
 	}
 }  

@@ -10,14 +10,10 @@ import org.redisson.api.RedissonClient;
  * 作者：丁志超
  */  
 public class RedissonLock {
-
-	public static void main(String[] args) {
-		redissonLock("2","2",10);
-	}
 	
+	static RedissonClient redissonClient = InItRedis.singleServerByRedisson();
 	
 	public static void redissonLock(String key,String value,Integer timeOut) {
-     	RedissonClient redissonClient =InItRedis.singleServerByRedisson();
 		RLock rLock = redissonClient.getLock(key);
 		try {
 			rLock.tryLock(timeOut, TimeUnit.SECONDS);
@@ -29,6 +25,10 @@ public class RedissonLock {
 				rLock.unlock();
 			}
 		}
-		
+	}
+	
+	
+	public static void main(String[] args) {
+		redissonLock("2","2",10);
 	}
 }  

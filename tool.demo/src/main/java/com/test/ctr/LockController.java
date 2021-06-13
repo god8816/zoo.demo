@@ -30,13 +30,13 @@ public class LockController {
 		
 		String key = UUID.randomUUID().toString();
 		Integer timeOut = 10;
-		//setNx 测试
-		SetNxLock.setNx(key, key, timeOut);
+		//setNx 测试 1562
+		//SetNxLock.setNx(key, key, timeOut);
 		
-		//Redisson 测试
+		//Redisson 测试 1552
 		RedissonLock.redissonLock(key, key, timeOut);
 		
-		//LuaLock 测试
+		//LuaLock 测试 1206TPS
 		LuaLock.lualock(key, key, timeOut);
 		
     }

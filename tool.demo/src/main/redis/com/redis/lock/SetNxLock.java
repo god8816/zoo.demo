@@ -1,5 +1,6 @@
 package com.redis.lock;
 
+import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
 
 
@@ -9,13 +10,11 @@ import redis.clients.jedis.JedisCluster;
  */  
 public class SetNxLock {
 	
-	public static void main(String[] args) {
-		setNx("1","1",10);
-	}
+
 	
+	static Jedis jedis = InItRedis.singleServerByRedisClients();
 	
 	public static void setNx(String key,String value,Integer timeOut) {
-		JedisCluster jedis = InItRedis.jedisClusterByRedisClients();
 		jedis.setnx(key, value);
 		try {
 			if(jedis.exists(key)) {
@@ -28,5 +27,9 @@ public class SetNxLock {
 		} finally {
 			jedis.del(key);
 		}
+	}
+	
+	public static void main(String[] args) {
+		setNx("1","1",10);
 	}
 }  
