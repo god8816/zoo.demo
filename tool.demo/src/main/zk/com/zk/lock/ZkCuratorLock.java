@@ -1,16 +1,12 @@
-package com.zk.curator;
+package com.zk.lock;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.locks.InterProcessLock;
 import org.apache.curator.framework.recipes.locks.InterProcessSemaphoreMutex;
 import org.apache.curator.retry.ExponentialBackoffRetry;
-import org.apache.zookeeper.KeeperException;
-  
-  
+
 /**
  * 功能：zk - zk Curator客户端 - 实现分布式锁测试
  * 作者：丁志超
@@ -28,15 +24,20 @@ public class ZkCuratorLock{
     
     //zk分布式锁创建节点在零时目录zklock下创建
     static String lockPath = "/zklock";
-
-	
-	public static void main(String[] args) throws NoSuchAlgorithmException, IOException, KeeperException, InterruptedException {
-	    //实例化分布式锁
+    
+ 
+    
+    
+	/**
+	 * ZK Curator Lock - 单机版本
+	 * */
+	public static void zkCuratorLock() {
+		//实例化分布式锁
 	    InterProcessLock lock = new InterProcessSemaphoreMutex(client, lockPath);
-		
 		//获取锁
 		try {
 			lock.acquire();
+			System.out.println("我获取了锁，该我干活了。");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,4 +50,9 @@ public class ZkCuratorLock{
 		}
 	}
 	
+
+	
+	public static void main(String[] args){
+		zkCuratorLock();
+	}
 }  
