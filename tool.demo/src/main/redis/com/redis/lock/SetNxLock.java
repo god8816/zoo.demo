@@ -12,7 +12,7 @@ public class SetNxLock {
 	
 
 	
-	static Jedis jedis = InItRedis.singleServerByRedisClients();
+	static JedisCluster jedis = InItRedis.jedisClusterByRedisClients();
 	
 	public static void setNx(String key,String value,Integer timeOut) {
 		jedis.setnx(key, value);

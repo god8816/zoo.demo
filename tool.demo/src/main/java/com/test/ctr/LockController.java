@@ -4,6 +4,7 @@ import java.util.UUID;
 import org.springframework.web.bind.annotation.*;
 import com.redis.lock.LuaLock;
 import com.redis.lock.RedissonLock;
+import com.redis.lock.SetNxLock;
 import com.zk.lock.ZkCuratorLock;
 
 /**
@@ -24,18 +25,18 @@ public class LockController {
 		String key = UUID.randomUUID().toString();
 		Integer timeOut = 10;
 		//setNx 测试 1562
-		//SetNxLock.setNx(key, key, timeOut);
+		SetNxLock.setNx(key, key, timeOut);
 		
 		//Redisson 测试 1552
-		RedissonLock.redissonLock(key, key, timeOut);
+		//RedissonLock.redissonLock(key, key, timeOut);
 		
 		//LuaLock 测试 1206TPS
-		LuaLock.lualock(key, key, timeOut);
+		//LuaLock.lualock(key, key, timeOut);
     }
 	
 	
     /**
-     * zk Lock 性能测试
+     * zk Lock 性能测试 2793TPS
      * @return
      */
 	@GetMapping("/zklock")
