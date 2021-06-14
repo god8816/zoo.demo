@@ -78,12 +78,6 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.12</version>
         </dependency>
-        
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>24.0-jre</version>
-        </dependency>
 
         <!-- zookeeper原生客户端 -->
         <dependency>
@@ -92,12 +86,23 @@
             <version>3.4.5</version>
         </dependency>
         
-        <!-- zookeeper curator客户端  -->
-        <dependency>
+        <!-- zookeeper curator客户端开始  -->
+		<dependency>
+		    <groupId>org.apache.curator</groupId>
+		    <artifactId>curator-framework</artifactId>
+		    <version>2.12.0</version>
+		</dependency>
+		<dependency>
 		    <groupId>org.apache.curator</groupId>
 		    <artifactId>curator-recipes</artifactId>
-		    <version>2.7.0</version>
+		    <version>2.12.0</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.apache.curator</groupId>
+		    <artifactId>curator-client</artifactId>
+		    <version>2.12.0</version>
+		</dependency>
+		<!-- zookeeper curator客户端结束  -->
 		
 		<dependency>
             <groupId>redis.clients</groupId>

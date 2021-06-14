@@ -1,10 +1,8 @@
 package com.zk.lock;
 
-import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
-import org.apache.curator.framework.recipes.locks.InterProcessLock;
-import org.apache.curator.framework.recipes.locks.InterProcessSemaphoreMutex;
+import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 
 /**
@@ -13,19 +11,23 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
  */  
 public class ZkCuratorLock{  
 	
-	//实例化客户端
-	private static RetryPolicy retryPolicy  = new ExponentialBackoffRetry(1000,3);
-    private static CuratorFramework client = CuratorFrameworkFactory.builder()
-            .connectString("zookeeper-dev.idc.yst.com.cn:2181")
-            .sessionTimeoutMs(3000)
-            .connectionTimeoutMs(5000)
-            .retryPolicy(retryPolicy)
-            .build();
-    
     //zk分布式锁创建节点在零时目录zklock下创建
     static String lockPath = "/zklock";
     
- 
+	private static CuratorFramework getZkClient() {
+        String zkServerAddress = "127.0.0.1:2181";
+        ExponentialBackoffRetry retryPolicy = new ExponentialBackoffRetry(1000, 3, 5000);
+        CuratorFramework zkClient = CuratorFrameworkFactory.builder()
+                .connectString(zkServerAddress)
+                .sessionTimeoutMs(5000)
+                .connectionTimeoutMs(5000)
+                .retryPolicy(retryPolicy)
+                .build();
+        zkClient.start();
+        return zkClient;
+    }
+	
+
     
     
 	/**
@@ -33,7 +35,9 @@ public class ZkCuratorLock{
 	 * */
 	public static void zkCuratorLock() {
 		//实例化分布式锁
-	    InterProcessLock lock = new InterProcessSemaphoreMutex(client, lockPath);
+		CuratorFramework zkClient = getZkClient();
+        InterProcessMutex lock = new InterProcessMutex(zkClient, lockPath);
+        
 		//获取锁
 		try {
 			lock.acquire();
