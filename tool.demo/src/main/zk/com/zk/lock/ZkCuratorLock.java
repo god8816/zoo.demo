@@ -4,12 +4,17 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.apache.curator.retry.ExponentialBackoffRetry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.redis.lock.RedissonLock;
 
 /**
  * 功能：zk - zk Curator客户端 - 实现分布式锁测试
  * 作者：丁志超
  */  
 public class ZkCuratorLock{  
+	private static final Logger logger = LoggerFactory.getLogger(ZkCuratorLock.class);
 	
     //zk分布式锁创建节点在零时目录zklock下创建
     static String lockPath = "/zklock";
@@ -46,7 +51,7 @@ public class ZkCuratorLock{
 		//获取锁
 		try {
 			lock.acquire();
-			System.out.println("我获取了锁，该我干活了。");
+			logger.info("zk我获取了锁，该我干活了。");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
