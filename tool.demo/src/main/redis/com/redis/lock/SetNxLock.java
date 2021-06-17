@@ -1,5 +1,7 @@
 package com.redis.lock;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
 
@@ -10,6 +12,7 @@ import redis.clients.jedis.JedisCluster;
  */  
 public class SetNxLock {
 	
+	 private static final Logger logger = LoggerFactory.getLogger(SetNxLock.class);
 
 	
 	static JedisCluster jedis = InItRedis.jedisClusterByRedisClients();
@@ -19,7 +22,7 @@ public class SetNxLock {
 		try {
 			if(jedis.exists(key)) {
 				jedis.expire(key, timeOut);
-				System.out.println("我获取了锁，干点活！");
+				logger.info("setNx我获取了锁，干点活！");
 				jedis.del("key");
 			}
 		} catch (Exception e) {

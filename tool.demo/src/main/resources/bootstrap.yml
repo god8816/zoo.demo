@@ -8,3 +8,10 @@ spring:
     active: test
   application:
       name: tool
+      
+logging:
+  path: /logs
+  config: classpath:logback-spring.xml
+#  控制屏蔽对应包的日志打印
+#  level:
+#   com.springboot.sixmonth.controller: 'off'

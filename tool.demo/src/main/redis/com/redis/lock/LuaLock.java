@@ -1,5 +1,8 @@
 package com.redis.lock;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import redis.clients.jedis.Jedis;
 
 /**
@@ -7,12 +10,12 @@ import redis.clients.jedis.Jedis;
  * 作者：丁志超
  */  
 public class LuaLock {
-	
+	private static final Logger logger = LoggerFactory.getLogger(LuaLock.class);
 	static Jedis jedis = InItRedis.singleServerByRedisClients();
 	
 	public static void lualock(String key,String value,Integer timeOut) {
 		 lock(key, value,timeOut);
-		 System.out.println("我获取了锁，该我干活了。");
+		 logger.info("lua我获取了锁，该我干活了。");
 		 unlock(key, value);
     }
 	
