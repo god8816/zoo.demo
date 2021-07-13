@@ -1,0 +1,46 @@
+server:
+  port: 8080
+  address: 0.0.0.0
+  servlet:
+    context-path: /
+    
+spring: 
+    application:
+      name: spring_cloud
+   
+org: 
+  zoo:
+    swan:
+      started: true
+      application-name: yst_tms_admin
+      token-support: SnowId
+      token-key: YST_ADMIN_KEY
+      swan-redis-config:
+        r-bloom-filter-config:
+          error-rate: 0.1
+          total-num: 10
+#       #cluster集群
+#        cluster: true
+#        cluster-servers-config:
+#          node-addresses:
+#          - redis://redis-cluster-test.idc.yst.com.cn:6379
+          
+          
+#       #redis单点配置      
+        single: true
+        single-server-config: 
+            address: redis://127.0.0.1:6379
+          
+
+
+logging:
+    level:
+        root: error
+        org.springframework.web: info
+        org.apache.ibatis: info
+        org.zoo.cat.bonuspoint: debug
+        org.zoo.cat.lottery: debug
+        org.zoo.cat: debug
+        io.netty: info
+    path: "./logs"
+
