@@ -10,6 +10,8 @@
 
     <modules>
        <module>kafka.demo</module>
+       <module>redis.demo</module>
+       <module>zk.demo</module>
     </modules>
   
 </project>
