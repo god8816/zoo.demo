@@ -18,7 +18,7 @@ public class ProducerDemo {
     public static void main(String[] args) throws Exception {
 
         Properties props = new Properties();
-        props.put("bootstrap.servers", "10.213.6.79:9092,10.213.8.109:9092,10.213.8.110:9092,10.213.8.111:9092");
+        props.put("bootstrap.servers", "10.213.3.11:9092,10.213.3.12:9092,10.213.3.13:9092,10.213.3.14:9092");
         props.put("acks", "0");
         props.put("group.id", "admin_consumer_group_test");
         props.put("retries", "0");
